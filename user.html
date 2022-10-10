@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function (){
+
+            $( '#formUploadFile' ).submit(function ( e ) {
+
+                let token = localStorage.getItem("token");
+                let da = new FormData(this);
+
+                let output = document.getElementById('output');
+                for(const [key, value] of da){
+                    output.textContent += `${key}:${value}\n`
+                }
+                console.log(da)
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    data: new FormData(this),
+                    processData: false,
+                    contentType: false,
+                    cache:false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    url: "http://localhost:8080/uploadFile",
+
+                    success: function (data) {
+                        console.log("da upload")
+                        console.log(data)
+                        let str = `<img src="/images/${data}" alt="">`
+                        document.getElementById("uploadFile").innerHTML= str;
+
+                        addPost(data);
+                    }
+                });
+                e.preventDefault();
+            });
+        })
+
+        function addPost(im){
+            let token = localStorage.getItem("token");
+            let da = JSON.parse(localStorage.getItem("data"));
+            let ct="dadadadadafa";
+            let appUser_id=da.id;
+            let image=[im];
+            let accessModifier=1;
+            let post={
+                content:ct,
+                img: [],
+                postTime: new Date(),
+                accessModifier:{
+                    id:1
+                },
+                appUsers:{
+                    id:appUser_id
+                }
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+
+                type:"POST",
+                data:JSON.stringify(post),
+                beforeSend:function (xhr){
+                    xhr.setRequestHeader("Authorization","Bearer "+ token);
+                },
+                url:"http://localhost:8080/posts",
+                success:function (data){
+                    console.log("da dang post")
+                }
+
+            })
+        }
+
+
+        function changeHandler(evt){
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            // FileList object.
+            var files = evt.target.files;
+
+            var file = files[0];
+
+            var fileReader = new FileReader();
+
+
+            fileReader.onload = function(progressEvent) {
+                var url = fileReader.result;
+
+                // Something like: data:image/png;base64,iVBORw...Ym57Ad6m6uHj96js
+                console.log(url);
+                //
+                var myImg = document.getElementById("myimage");
+                myImg.src= url;
+            }
+
+
+            // Read file asynchronously.
+            fileReader.readAsDataURL(file); // fileReader.result -> URL.
+        }
+
+
+    </script>
+
+
+
+</head>
+<body>
+<h1>User</h1>
+
+<h3>Select Image to Show</h3>
+
+<label for="file">alolo</label></br></br>
+<input id="file"  type="file" onchange="changeHandler(event)">
+
+<input type="submit" onclick="add()" value="abc">
+
+<br><br>
+
+<img id="myimage" src="">
+<p id="output"></p>
+
+<form enctype="multipart/form-data" id="formUploadFile">
+    <input type="text" id="id" placeholder="id"> <br>
+    <input type="text" id="content" placeholder="content"> <br>
+    <input type="text" id="likecount" placeholder="likecount"> <br>
+    <input type="text" id="acc" placeholder="acc"> <br>
+    <input type="text" id="like" placeholder="like"> <br>
+    <input type="text" id="comment" placeholder="comment"> <br>
+    <input type="text" id="user" placeholder="user"> <br>
+    <input type="file" id="fie" name="File"> <br>
+    <input type="submit" class="submit">
+</form>
+
+<p id="uploadFile"></p>
+
+
+</body>
+</html>
