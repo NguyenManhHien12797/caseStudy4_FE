@@ -11,7 +11,7 @@ function login() {
         type: "POST",
         headers: {
             //kiểu dữ liệu nhận về
-            'Accept': 'application/json',
+            // 'Accept': 'application/json',
             // kiểu truyền đi
             "Content-Type": "application/json"
         },
