@@ -260,7 +260,7 @@ $(document).ready(function (){
 
     if(dat==null|| dat==""){
         console.log("dang nhap di")
-        location.href="login.html"
+        location.href="index.html"
     }
 
 
@@ -278,7 +278,7 @@ $(document).ready(function (){
 
     $('.settings-links').click(function (){
         localStorage.clear();
-        location.href="login.html";
+        location.href="index.html";
     })
 
     // logout
