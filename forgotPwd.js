@@ -1,10 +1,10 @@
 function sendMail() {
     let email = $("#email").val()
     let appUser = {
-        email: email
+        "email": email
     };
     $.ajax({
-        type: "GET",
+        type: "POST",
         headers: {
             //kiểu dữ liệu nhận về
             // Accept: "application/json",
