@@ -87,7 +87,6 @@ listPosts();
 
 function listComments(id){
     let token = localStorage.getItem("token");
-    let d = localStorage.getItem("data")
 
     $.ajax({
         type: "GET",
@@ -110,7 +109,7 @@ function listComments(id){
                     `<button class="comment-user-contain-show-btn" >...</button>`+
                     `<div class="comment-user-contain-delete">`+
                     `<button class="comment-user-contain-delete-btn" onclick="deleteComment(${data[i].id}, ${id})">Xóa bình luận</button>`+
-                    `<button class="comment-user-contain-update-btn comment-user-contain-delete-btn" onclick="hideform(${data[i].id},${id})" >Sửa bình luận</button>`+
+                    `<button class="comment-user-contain-update-btn comment-user-contain-delete-btn" onclick="showFormUpdateComent(${data[i].id},${id},'${data[i].cmtContent}')" >Sửa bình luận</button>`+
                     `</div>`+
                     `</div>`+
                     ` </div>`+
@@ -124,10 +123,8 @@ function listComments(id){
 }
 
 
-function hideform(id, post_id){
-
-    let str =  `<input type="text" placeholder="Viết bình luận" class="comment-update" id="status-comment-update${id}${post_id}" onkeydown="updateKeyHandler(event,${id},${post_id})">`
-        // ` <button class="status-comment-update-btn" value="Update" onclick="updateComment(${id},${post_id})"></button>`;
+function showFormUpdateComent(id, post_id,content){
+    let str =  `<input type="text" placeholder="Viết bình luận" class="comment-user-ct comment-update" id="status-comment-update${id}${post_id}" value="${content}" onkeydown="updateKeyHandler(event,${id},${post_id})">`
     document.getElementById(`comment-user-ct${id}`).innerHTML=str;
 
 
@@ -135,10 +132,10 @@ function hideform(id, post_id){
 
 function updateComment(id,post_id){
     let token = localStorage.getItem("token");
-    let d = localStorage.getItem("data")
+    let da = JSON.parse(localStorage.getItem("data"))
     let postId = post_id;
     let content= $(`#status-comment-update${id}${post_id}`).val();
-    let appUser_id=1;
+    let appUser_id=da.id;
     let cmt= {
         appUsers:{
             id:appUser_id

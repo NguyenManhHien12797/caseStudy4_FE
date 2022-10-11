@@ -366,6 +366,7 @@ img.advertisement-image {
     border-bottom: 1px solid #ccc;
     background: transparent;
     resize: none;
+    color: #1876f2;
 }
 
 .add-post-links {
@@ -478,16 +479,10 @@ img.advertisement-image {
     margin-right: 30px;
     border-radius: 20px;
 }
-.comment-user-ct input{
-    /*border-radius: 30px;*/
-    /*background-color: #ebebeb;*/
-    /*border: none;*/
-    /*font-size: 16px;*/
-    /*padding-top: 8px;*/
-}
+
 
 .comment-update{
-    width: 800px;
+    width: 580px;
     border-radius: 30px;
     background-color: #ebebeb;
     border: none;
@@ -569,6 +564,17 @@ img.advertisement-image {
     width: 20px;
     height: 20px;
     background-color: aqua;
+}
+
+#users_name{
+    display: -webkit-box;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+#users_name:hover{
+    background-color: #a5c3ec;
 }
 
 /*comment*/
